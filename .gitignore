@@ -1,6 +1,9 @@
 # DS Store
 .DS_Store/
 
+# config file for dev purposes only
+/config/dev/
+
 # Logs
 logs
 *.log
