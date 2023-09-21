@@ -1,0 +1,29 @@
+{
+  "name": "tech-blog",
+  "version": "1.0.0",
+  "description": "a functional psueo CMS style tech blog",
+  "main": "server.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jrapich/tech-blog.git"
+  },
+  "keywords": [
+    "CMS-style",
+    "blog",
+    "tech",
+    "blog"
+  ],
+  "author": "https://github.com/jrapich",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jrapich/tech-blog/issues"
+  },
+  "homepage": "https://github.com/jrapich/tech-blog#readme"
+}
