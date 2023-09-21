@@ -7,8 +7,10 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "test",
-    "start": "node server.js"
+    "test": "jest",
+    "start": "node server.js",
+    "schema": "mysql -u root -p < db/schema.sql",
+    "seed": "node seeds/seed.js"
   },
   "repository": {
     "type": "git",
