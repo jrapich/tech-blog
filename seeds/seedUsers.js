@@ -1,13 +1,25 @@
-const {User} =  require('../models');
+const { User } =  require('../models');
+const bcrypt = require('bcrypt');
 
-const userData = [
-    {
-        username:'admin',
-        email:'admin@fakeemail.com',
-        password:'123456789'
-    }
-];
+const hashPass = async (pass) => {
+    const hashed = await bcrypt.hash(pass, 10);
+    return hashed;
+};
 
-const seedUsers = () => User.bulkCreate(userData);
+
+const seedUsers = async () => {
+    const hashed = await hashPass('01234567890');
+    
+    const userData = [
+        {
+            username:'admin',
+            email:'admin@fakeemail.com',
+            password: hashed
+        }
+    ];
+    
+    await User.bulkCreate(userData);
+}
+
 
 module.exports = seedUsers;
