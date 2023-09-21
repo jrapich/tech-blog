@@ -22,3 +22,5 @@ User.hasMany(Comment,{
     onUpdate:'CASCADE'
 });
 Comment.belongsTo(User);
+
+module.exports = {User, Post, Comment};
