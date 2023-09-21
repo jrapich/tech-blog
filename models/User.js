@@ -23,7 +23,6 @@ User.init(
             validate:{
                 notEmpty:true,
                 isAlphanumeric: true,
-                notEmpty:true,
                 notNull:true
             }
         },
