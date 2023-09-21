@@ -10,7 +10,7 @@
     "test": "jest",
     "start": "node server.js",
     "schema": "mysql -u root -p < db/schema.sql",
-    "seed": "node seeds/seed.js"
+    "seed": "node seeds/seeds.js"
   },
   "repository": {
     "type": "git",
