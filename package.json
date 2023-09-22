@@ -10,7 +10,8 @@
     "test": "jest",
     "start": "node server.js",
     "schema": "mysql -u root -p < db/schema.sql",
-    "seed": "node seeds/index.js"
+    "seed": "node seeds/index.js",
+    "watch": "nodemon server.js"
   },
   "repository": {
     "type": "git",
