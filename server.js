@@ -18,7 +18,7 @@ const hbs = exphbs.create();
 
 //configuration for session/sequelize sync
 const sess = {
-    secret: 'Super secret secret',
+    secret: process.env.SESSION_SECRET,
     cookie: {},
     resave: false,
     saveUninitialized: true,
