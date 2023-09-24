@@ -3,27 +3,17 @@ const {Post} = require('../models');
 const auth = require('../utils/isAuth');
 
 router.get('/', async (req, res) => {
-    //if the user is not logged in, send them a version of homepage with features missing
-    if (!req.session.logged_in) {
-        try {
-            const allPosts = await Post.findAll();
-            let posts;
-            (allPosts.length > 5) ? posts = allPosts.slice(-5) : posts = allPosts;
-            res.render('home', posts);
-        } catch (err) {
-            console.error(err);
-            res.status(500).json(err);
-    }} else {
-        //if user is logged in already, show all features on homepage
-        try {
-            const allPosts = await Post.findAll();
-            let posts;
-            (allPosts.length > 5) ? posts = allPosts.slice(-5) : posts = allPosts;
-            res.render('homeLoggedIn', posts);
-        } catch (err) {
-            console.error(err);
-            res.status(500).json(err);
-    }};
+    try {
+        const allPosts = await Post.findAll();
+        let posts;
+        (allPosts.length > 5) ? posts = allPosts.slice(-5) : posts = allPosts;
+        posts = allPosts.map((post) => post.get({ plain: true }));
+        console.log(posts);
+        res.render('home', {posts});
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
 });
 
 router.get('/login', async (req, res) => {
