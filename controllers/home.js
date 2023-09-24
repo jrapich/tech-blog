@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const {Post} = require('../models');
+const auth = require('../utils/isAuth');
 
 router.get('/', async (req, res) => {
 
@@ -20,6 +21,16 @@ router.get('/', async (req, res) => {
 router.get('/login', async (req, res) => {
     try {
         res.render('login');
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
+});
+
+router.get('/posts', auth, async (req, res) => {
+    try {
+        const allPosts = await Post.findAll();
+        res.render('allposts', allPosts);
     } catch (err) {
         console.error(err);
         res.status(500).json(err);
