@@ -40,7 +40,7 @@ router.post('/signup', async () => {
 });
 
 router.post('/login', async (req, res) => {
-    const username = req.body.user.toLowerCase();
+    const username = req.body.username.toLowerCase();
     try {
         const userData = await User.findOne({
             where:{
@@ -71,10 +71,10 @@ router.post('/login', async (req, res) => {
     }
 });
 
-router.post('/logout', async () => {
+router.post('/logout', async (req, res) => {
     req.session.destroy(() => {
         res.status(204).end();
-    })
+    });
 });
 
 module.exports = router;
