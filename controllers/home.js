@@ -47,4 +47,8 @@ router.get('/posts/:id', auth, async (req, res) => {
     }
 });
 
+router.get('*', (req, res) => {
+    res.redirect('/');
+});
+
 module.exports = router;
