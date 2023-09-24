@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const { User } = require('../../../../UofU-VIRT-FSF-PT-06-2023-U-LOLC/14-MVC/01-Activities/24-Stu_Auth-Review/Solved/models');
 const {Post} = require('../models');
 const auth = require('../utils/isAuth');
 
