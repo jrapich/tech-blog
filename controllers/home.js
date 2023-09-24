@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
             const allPosts = await Post.findAll();
             let posts;
             (allPosts.length > 5) ? posts = allPosts.slice(-5) : posts = allPosts;
-            res.render('homepage', posts);
+            res.render('home', posts);
         } catch (err) {
             console.error(err);
             res.status(500).json(err);
@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
             const allPosts = await Post.findAll();
             let posts;
             (allPosts.length > 5) ? posts = allPosts.slice(-5) : posts = allPosts;
-            res.render('homepageloggedin', posts);
+            res.render('homeLoggedIn', posts);
         } catch (err) {
             console.error(err);
             res.status(500).json(err);
