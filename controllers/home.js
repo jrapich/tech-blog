@@ -3,17 +3,27 @@ const {Post} = require('../models');
 const auth = require('../utils/isAuth');
 
 router.get('/', async (req, res) => {
-    try {
-        //get a list of all posts and show the 5 most recent
-        //only show the post titles, no comments as we aren't checking if the user is logged in yet
-        const allPosts = await Post.findAll();
-        let posts;
-        (allPosts.length > 5) ? posts = allPosts.slice(-5) : posts = allPosts;
-        res.render('homepage', posts);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json(err);
-    }
+    //if the user is not logged in, send them a version of homepage with features missing
+    if (!req.session.logged_in) {
+        try {
+            const allPosts = await Post.findAll();
+            let posts;
+            (allPosts.length > 5) ? posts = allPosts.slice(-5) : posts = allPosts;
+            res.render('homepage', posts);
+        } catch (err) {
+            console.error(err);
+            res.status(500).json(err);
+    }} else {
+        //if user is logged in already, show all features on homepage
+        try {
+            const allPosts = await Post.findAll();
+            let posts;
+            (allPosts.length > 5) ? posts = allPosts.slice(-5) : posts = allPosts;
+            res.render('homepageloggedin', posts);
+        } catch (err) {
+            console.error(err);
+            res.status(500).json(err);
+    }};
 });
 
 router.get('/login', async (req, res) => {
