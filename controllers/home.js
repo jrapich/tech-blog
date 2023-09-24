@@ -40,7 +40,7 @@ router.get('/posts/:id', auth, async (req, res) => {
         const post = await Post.findByPk(req.params.id, {
             include:[{all:true}]
         });
-        res.render('post', post)
+        res.render('post', post);
     } catch (err) {
         console.error(err);
         res.status(500).json(err);
