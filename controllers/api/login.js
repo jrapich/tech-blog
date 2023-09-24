@@ -2,7 +2,7 @@ const router = require('express').Router();
 const {User} = require('../../models');
 const auth = require('../../utils/isAuth');
 
-router.post('/', async (req, res) => {
+router.post('/login', async (req, res) => {
     try {
         const userData = await User.findOne({
             where:{
@@ -31,6 +31,12 @@ router.post('/', async (req, res) => {
         console.error(err);
         res.status(500).json(err);
     }
+});
+
+router.post('/logout', async () => {
+    req.session.destroy(() => {
+        res.status(204).end();
+    })
 });
 
 module.exports = router;
