@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const {User} = require('../../models');
+const {getUserList} = require('../../utils');
 
 router.post('/signup', async () => {
     try {
@@ -18,6 +19,13 @@ router.post('/signup', async () => {
         } 
         username = username.toLowerCase();
         email = email.toLowerCase();
+
+        const userList = await getUserList();
+        const userCheck = userList.find(username);
+        if (userCheck) {
+            res.status(409).json({message:'the username already exists'});
+        };
+        
         const newUserData = await User.create({
             username: username,
             email: email,
