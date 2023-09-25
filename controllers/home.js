@@ -1,29 +1,30 @@
 const router = require('express').Router();
-const {Post} = require('../models');
-const auth = require('../utils/isAuth');
+const {Post, User} = require('../models');
+const {isAuth, getUserList} = require('../utils');
 
 router.get('/', async (req, res) => {
-    //if the user is not logged in, send them a version of homepage with features missing
-    if (!req.session.logged_in) {
-        try {
-            const allPosts = await Post.findAll();
-            let posts;
-            (allPosts.length > 5) ? posts = allPosts.slice(-5) : posts = allPosts;
-            res.render('homepage', posts);
-        } catch (err) {
-            console.error(err);
-            res.status(500).json(err);
-    }} else {
-        //if user is logged in already, show all features on homepage
-        try {
-            const allPosts = await Post.findAll();
-            let posts;
-            (allPosts.length > 5) ? posts = allPosts.slice(-5) : posts = allPosts;
-            res.render('homepageloggedin', posts);
-        } catch (err) {
-            console.error(err);
-            res.status(500).json(err);
-    }};
+    try {
+        const allPosts = await Post.findAll({
+            include:[{model:User,
+            attributes:['username']
+            }]
+        });
+        const userList = await getUserList();
+        let posts;
+
+        (allPosts.length > 5) ? posts = allPosts.slice(-5) : posts = allPosts;
+        posts = allPosts.map((post) => post.get({ plain: true }));
+
+        for (let i = 0; i < posts.length; i++) {
+            posts[i].created_by = userList[posts[i].created_by-1];
+        }
+
+        console.log(posts);
+        res.render('home', {posts});
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
 });
 
 router.get('/login', async (req, res) => {
@@ -35,17 +36,25 @@ router.get('/login', async (req, res) => {
     }
 });
 
-router.get('/posts', auth, async (req, res) => {
+router.get('/posts', async (req, res) => {
     try {
         const allPosts = await Post.findAll();
-        res.render('allposts', allPosts);
+        let posts;
+        let postIds = [];
+        (allPosts.length > 5) ? posts = allPosts.slice(-5) : posts = allPosts;
+        posts = allPosts.map((post) => post.get({ plain: true }));
+        for (let i = 0; i < posts.length; i++) {
+            postIds.push(posts[i].id);
+        }
+
+        res.json(postIds);
     } catch (err) {
         console.error(err);
         res.status(500).json(err);
     }
 });
 
-router.get('/posts/:id', auth, async (req, res) => {
+router.get('/posts/:id', isAuth, async (req, res) => {
     try {
         const post = await Post.findByPk(req.params.id, {
             include:[{all:true}]
