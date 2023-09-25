@@ -14,7 +14,11 @@ router.post('/signup', async (req, res) => {
             return;
         }
         if (!password) {
-            res.status(418).json({message:'Please enter a password'});
+            res.status(418).json({message:'Please enter a valid password'});
+            return;
+        }
+        if (password.length < 8) {
+            res.status(418).json({message:'Please enter a password longer than 8 characters'});
             return;
         } 
         username = username.toLowerCase();
