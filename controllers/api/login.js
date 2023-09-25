@@ -4,7 +4,6 @@ const {getUserList} = require('../../utils');
 
 router.post('/signup', async (req, res) => {
     try {
-        console.log(req.body);
         let {username, email, password} = req.body;
         if (!username) {
             res.status(418).json({message:'Please enter a username'});
@@ -22,7 +21,9 @@ router.post('/signup', async (req, res) => {
         email = email.toLowerCase();
 
         const userList = await getUserList();
-        const checkUserList = user => user = username; 
+        const checkUserList = user =>  {
+            return user === username;
+        } 
         const userCheck = userList.find(checkUserList);
         if (userCheck === username) {
             res.status(409).json({message:'the username already exists'});
