@@ -36,10 +36,18 @@ router.get('/login', async (req, res) => {
     }
 });
 
-router.get('/posts', isAuth, async (req, res) => {
+router.get('/posts', async (req, res) => {
     try {
         const allPosts = await Post.findAll();
-        res.render('allposts', allPosts);
+        let posts;
+        let postIds = [];
+        (allPosts.length > 5) ? posts = allPosts.slice(-5) : posts = allPosts;
+        posts = allPosts.map((post) => post.get({ plain: true }));
+        for (let i = 0; i < posts.length; i++) {
+            postIds.push(posts[i].id);
+        }
+
+        res.json(postIds);
     } catch (err) {
         console.error(err);
         res.status(500).json(err);
