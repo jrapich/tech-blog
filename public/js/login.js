@@ -1,26 +1,29 @@
-const usernameInput = document.querySelector('#usernameInput').value.trim();
-const passwordInput = document.querySelector('#passwordInput').value.trim();
 const loginText = document.querySelector('#userHelp');
 const btn = document.querySelector('#loginSubmit');
+const form = document.querySelector('#submit');
 
-const redirect = () => {
-    setTimeout(() => {
-        console.log(`user ${usernameInput} verified ! logging in...`);
-        loginText.textContent = 'Success! Logging you in...' 
-        document.location.replace('/');
-    }, 3000); 
-}
 
-btn.addEventListener('submit', async (event) => {
+form.addEventListener('submit', async (event) => {
     event.preventDefault();
+    const usernameInput = document.querySelector('#usernameInput').value.trim();
+    const passwordInput = document.querySelector('#passwordInput').value.trim();
 
     const response = await fetch('/api/auth/login', {
         method: 'POST',
-        body: JSON.stringify({ usernameInput, passwordInput }),
+        body: JSON.stringify({ 
+            username: usernameInput, 
+            password: passwordInput 
+        }),
         headers: { 'Content-Type': 'application/json' },
-      });
-    const res = response.json();
-    console.log(res);
+    });
+    const res = await response.json();
+    const redirect = () => {
+        console.log(res.message);
+        loginText.textContent = 'Success! Logging you in...';
+        setTimeout(() => { 
+            document.location.replace('/');
+        }, 3000); 
+    }
 
     (response.ok) ? redirect() : loginText.textContent = res.message;
       
