@@ -40,7 +40,7 @@ User.init(
             allowNull:false,
             validate:{
                 notEmpty:true,
-                min:[8],
+                min:8,
                 notNull:true
             }
         }
