@@ -2,8 +2,9 @@ const router = require('express').Router();
 const {User} = require('../../models');
 const {getUserList} = require('../../utils');
 
-router.post('/signup', async () => {
+router.post('/signup', async (req, res) => {
     try {
+        console.log(req.body);
         let {username, email, password} = req.body;
         if (!username) {
             res.status(418).json({message:'Please enter a username'});
@@ -21,11 +22,13 @@ router.post('/signup', async () => {
         email = email.toLowerCase();
 
         const userList = await getUserList();
-        const userCheck = userList.find(username);
-        if (userCheck) {
+        const checkUserList = user => user = username; 
+        const userCheck = userList.find(checkUserList);
+        if (userCheck === username) {
             res.status(409).json({message:'the username already exists'});
+            return;
         };
-        
+
         const newUserData = await User.create({
             username: username,
             email: email,
@@ -33,12 +36,12 @@ router.post('/signup', async () => {
         });
         req.session.save(() => {
             req.session.user_id = newUserData.id;
-            req.session.username = userData.username;
+            req.session.username = newUserData.username;
             req.session.logged_in = true;
 
             res.json({
-                user: userData.username,
-                message: `Welcome ${userData.username}! You are now logged in.`
+                user: newUserData.username,
+                message: `Welcome ${newUserData.username}! You are now logged in.`
             });
         });
     } catch (err) {
