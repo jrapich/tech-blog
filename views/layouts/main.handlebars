@@ -12,21 +12,25 @@
         <nav class="navbar bg-body-tertiary">
             <div class="container-fluid">
                 <span class="navbar-brand mb-0 h1">Tech-Blog</span>
+                {{#if user}}
+                <span class="navbar-brand mb-0 h4 align-items-end">Logged in as {{user}}
+                    <div class=""><a class="" href="/api/auth/logout">Logout</a></div>
+                </span>
+                {{/if}}
             </div>
         </nav>
     </header>
     <main>
         <div class="container-fluid text-center">
             <div class="row align-items-start">
-                <div class="col-2">
+                <section class="col-2">
                     Nav Column
-                </div>
-                <div class="col">
-                    content columns
-                    <div>
+                </section>
+                <section class="col">
+                    <section>
                         {{{body}}}
-                    </div>
-                </div>
+                    </section>
+                </section>
             </div>
         </div>
     </main>
