@@ -19,8 +19,14 @@ router.get('/', async (req, res) => {
             posts[i].created_by = userList[posts[i].created_by-1];
         }
 
-        console.log(posts);
-        res.render('home', {posts});
+        const postObj = {
+            posts:posts,
+        }
+        if (req.session.logged_in) {
+            postObj.user = req.session.username
+        }
+        
+        res.render('home', postObj);
     } catch (err) {
         console.error(err);
         res.status(500).json(err);
