@@ -5,9 +5,10 @@ const {isAuth, getUserList} = require('../utils');
 router.get('/', async (req, res) => {
     try {
         const allPosts = await Post.findAll({
-            include:[{model:User,
-            attributes:['username']
-            }]
+            include:User,
+            attributes :{
+                exclude:['password']
+            }
         });
         const userList = await getUserList();
         let posts;
@@ -72,7 +73,11 @@ router.get('/posts', async (req, res) => {
 router.get('/posts/:id', isAuth, async (req, res) => {
     try {
         const post = await Post.findByPk(req.params.id, {
-            include:[{all:true}]
+            include:[{all:true}],
+            attributes:{
+                include:['username'],
+                exclude:['password']
+            }
         });
         (!post) ? res.status(404).json("ERROR, post not found") : res.render('post', post);
     } catch (err) {
