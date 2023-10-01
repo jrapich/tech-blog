@@ -1,9 +1,50 @@
 <section class="container-fluid">
-    <div class="col justify-content-start">
-        column of post "cards" go here
+    <section class="col justify-content-start post-section">
+        {{#if dashboard}}
+        <section class="row">
+            <div class="col-10 text-center" style="padding-bottom: 40px;">
+                Welcome, {{user}}! Here are the posts you have created on the site:
+            </div>
+        </section>
+        {{/if}}
+        <section class="row postrow-columns">
+            <div class="col-2">
+                Title
+            </div>
+            <div class="col-6">
+                Post Content
+            </div>
+            <div class="col-2">
+                Created by:
+            </div>
+            <div class="col-2">
+                Date posted:
+            </div>
+        </section>
         {{#each posts as |post|}}
-        {{> post}}
+            {{> post}}
         {{/each}}
-    </div>
+    </section>
+    {{#if dashboard}}
+    <section class="row justify-content-center">
+        <div class="col-2"></div>
+        <div class="col-6">
+            Create a new post:
+            <form class="form-floating">
+                <input type="text" class="form-control" id="floatingInputTitle">
+                <label for="floatingInputTitle">Type your post title</label>
+            </form>
+            <div style="padding: 10px;"></div>
+            <form class="form-floating">
+                <input type="text" class="form-control" id="floatingInputContent">
+                <label for="floatingInputContent">Enter post content here</label>
+            </form>
+            <div style="padding: 10px;"></div>
+            <button type="button" class="btn btn-outline-success col-2" id="submitPost">Submit</button>
+        </div>
+        <div class="col-4"></div>
+    </section>
+    <script src="/js/submit.js"></script>  
+    {{/if}}
 </section>
 <script src="/js/home.js"></script>

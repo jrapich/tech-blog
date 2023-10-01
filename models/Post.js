@@ -19,7 +19,6 @@ Post.init(
             allowNull:false,
             validate:{
                 notEmpty:true,
-                isAlphanumeric:true,
                 notNull:true
             }
         },
@@ -28,7 +27,6 @@ Post.init(
             allowNull:false,
             validate:{
                 notEmpty:true,
-                isAlphanumeric:true,
                 notNull:true
             }
         },

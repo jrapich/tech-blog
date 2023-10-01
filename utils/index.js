@@ -1,4 +1,4 @@
-const getUserList = require('./getUserList');
 const isAuth = require('./isAuth');
+const getUserList = require('./getUserList');
 
-module.exports = {getUserList, isAuth};
+module.exports = {isAuth, getUserList};
