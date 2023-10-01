@@ -21,14 +21,14 @@ Comment.init(
                 notNull:true
             }
         },
-        parent_post:{
+        post_id:{
             type:DataTypes.INTEGER,
             references:{
                 model:'post',
                 key:'id'
             }
         },
-        created_by:{
+        user_id:{
             type:DataTypes.INTEGER,
             references:{
                 model:'user',

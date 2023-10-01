@@ -32,7 +32,7 @@ Post.init(
                 notNull:true
             }
         },
-        created_by:{
+        user_id:{
             type:DataTypes.INTEGER,
             references:{
                 model:'user',
