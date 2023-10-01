@@ -4,10 +4,10 @@ const commentData = [
     {
         comment_content:'comments will appear here',
         parent_post:2,
-        created_by:1
+        user_id:1
     }
 ];
 
-const seedComments = () => Comment.bulkCreate(commentData);
+const seedComments = async () => await Comment.bulkCreate(commentData);
 
 module.exports = seedComments;
