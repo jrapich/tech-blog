@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
         posts = allPosts.map((post) => post.get({ plain: true }));
 
         for (let i = 0; i < posts.length; i++) {
-            posts[i].created_by = userList[posts[i].created_by-1];
+            posts[i].user_id = userList[posts[i].user_id-1];
         }
 
         const postObj = {
