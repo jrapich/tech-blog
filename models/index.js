@@ -1,13 +1,7 @@
 //import our models
-const Comment = require('./Comment');
-const Post = require('./Post');
 const User = require('./User');
-
-//A post can have many comments, but a comment can only have one post
-Post.hasMany(Comment,{
-    onDelete:'CASCADE'
-});
-Comment.belongsTo(Post);
+const Post = require('./Post');
+const Comment = require('./Comment');
 
 //user can have many posts, but a post can only have one user
 User.hasMany(Post,{
@@ -22,5 +16,11 @@ User.hasMany(Comment,{
     onUpdate:'CASCADE'
 });
 Comment.belongsTo(User);
+
+//A post can have many comments, but a comment can only have one post
+Post.hasMany(Comment,{
+    onDelete:'CASCADE'
+});
+Comment.belongsTo(Post);
 
 module.exports = {User, Post, Comment};
