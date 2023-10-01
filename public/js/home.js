@@ -2,7 +2,7 @@ const postRows = document.querySelectorAll('.postrow');
 
 
 const postIDs = async () => {
-    const response = await fetch('/posts');
+    const response = await fetch('/posts/id/all');
     const posts = await response.json();
     return posts;
 }

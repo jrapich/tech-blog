@@ -50,7 +50,7 @@ router.get('/signup', async (req, res) => {
     }
 });
 
-router.get('/posts', async (req, res) => {
+router.get('/posts/id/all', async (req, res) => {
     try {
         const allPosts = await Post.findAll();
         let posts;
