@@ -99,7 +99,6 @@ router.get('/posts/:id', isAuth, async (req, res) => {
             },
         });
         post = await post.get({plain:true});
-        console.log(post);
         (!post.id) ? res.status(404).json("ERROR, post not found") : res.render('post', post);
     } catch (err) {
         console.error(err);
