@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {Post, User} = require('../models');
-const {isAuth, getUserList} = require('../utils');
+const {isAuth} = require('../utils');
 
 router.get('/', async (req, res) => {
     try {
@@ -8,7 +8,6 @@ router.get('/', async (req, res) => {
             include:{model:User},
             attributes :{exclude:['password']}
         });
-        const userList = await getUserList();
         let posts;
 
         (allPosts.length > 5) ? posts = allPosts.slice(-5) : posts = allPosts;
