@@ -92,13 +92,15 @@ router.get('/posts/all', isAuth, async (req, res) => {
 
 router.get('/posts/:id', isAuth, async (req, res) => {
     try {
-        const post = await Post.findByPk(req.params.id, {
+        let post = await Post.findByPk(req.params.id, {
             include:[{all:true}],
             attributes:{
                 exclude:'password'
-            }
+            },
         });
-        (!post) ? res.status(404).json("ERROR, post not found") : res.render('post', post);
+        post = await post.get({plain:true});
+        console.log(post);
+        (!post.id) ? res.status(404).json("ERROR, post not found") : res.render('post', post);
     } catch (err) {
         console.error(err);
         res.status(500).json(err);
