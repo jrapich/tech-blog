@@ -82,7 +82,7 @@ router.get('/posts/all', isAuth, async (req, res) => {
             posts[i].user.email = null;
         }
         //res.json(posts);
-        res.render('home', posts);
+        res.render('home', {posts});
     } catch (err) {
         console.error(err);
         res.status(500).json(err);
