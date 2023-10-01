@@ -10,10 +10,14 @@ const postIDs = async () => {
 const postRowEventHandler = async () => {
     let totalPosts = await postIDs();
     let rowID = [];
+
+    for (let j = 0; j < totalPosts.length; j++) {
+        rowID.push(postRows[j].getAttribute('id'));
+    }
+
     for (let i = 0; i < totalPosts.length; i++) {
         postRows[i].addEventListener('click', async (event) => {
             event.preventDefault();
-            rowID.push(postRows[i].getAttribute('id'));
             document.location.replace(`/posts/${rowID[i]}`);
         });
     }
