@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {Post, User} = require('../models');
-const {isAuth} = require('../utils');
+const isAuth = require('../utils');
 
 router.get('/', async (req, res) => {
     try {
@@ -15,10 +15,6 @@ router.get('/', async (req, res) => {
         for (let i = 0; i < posts.length; i++) {
             posts[i].user.password = null;
             posts[i].user.email = null;
-        }
-
-        for (let i = 0; i < posts.length; i++) {
-            posts[i].user_id = userList[posts[i].user_id-1];
         }
 
         const postObj = {
@@ -113,6 +109,17 @@ router.get('/posts/:id', isAuth, async (req, res) => {
         console.error(err);
         res.status(500).json(err);
     }
+});
+
+router.get('/dashboard', isAuth, async (req, res) => {
+    let userPosts;
+    const userPostData = await Post.findAll({
+        include:{model:User},
+        where:{user_id:req.session.user_id}
+    });
+    userPosts = await userPostData.map((post) => post.get({ plain: true }));
+    
+    res.render('dashboard', {userPosts});
 });
 
 router.get('*', (req, res) => {
