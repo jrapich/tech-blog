@@ -68,13 +68,34 @@ router.get('/posts/id/all', async (req, res) => {
     }
 });
 
+router.get('/posts/all', isAuth, async (req, res) => {
+    try {
+        const allPosts = await Post.findAll({
+            include:{model:User},
+            attributes :{exclude:['password']}
+        });
+        let posts = await allPosts.map( (post) => post.get({ plain: true }));
+        console.log(posts);
+        
+        for (let i = 0; i < posts.length; i++) {
+            posts[i].user.password = null;
+            posts[i].user.email = null;
+        }
+        //res.json(posts);
+        res.render('home', posts);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
+    
+});
+
 router.get('/posts/:id', isAuth, async (req, res) => {
     try {
         const post = await Post.findByPk(req.params.id, {
             include:[{all:true}],
             attributes:{
-                include:['username'],
-                exclude:['password']
+                exclude:'password'
             }
         });
         (!post) ? res.status(404).json("ERROR, post not found") : res.render('post', post);
