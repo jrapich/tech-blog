@@ -12,7 +12,11 @@ router.get('/', async (req, res) => {
         let posts;
 
         (allPosts.length > 5) ? posts = allPosts.slice(-5) : posts = allPosts;
-        posts = allPosts.map((post) => post.get({ plain: true }));
+        posts = await allPosts.map((post) => post.get({ plain: true }));
+        for (let i = 0; i < posts.length; i++) {
+            posts[i].user.password = null;
+            posts[i].user.email = null;
+        }
 
         for (let i = 0; i < posts.length; i++) {
             posts[i].user_id = userList[posts[i].user_id-1];
@@ -75,14 +79,20 @@ router.get('/posts/all', isAuth, async (req, res) => {
             attributes :{exclude:['password']}
         });
         let posts = await allPosts.map( (post) => post.get({ plain: true }));
-        console.log(posts);
         
         for (let i = 0; i < posts.length; i++) {
             posts[i].user.password = null;
             posts[i].user.email = null;
         }
+
+        const postObj = {
+            posts:posts,
+        }
+        if (req.session.logged_in) {
+            postObj.user = req.session.username
+        }
         //res.json(posts);
-        res.render('home', {posts});
+        res.render('home', postObj);
     } catch (err) {
         console.error(err);
         res.status(500).json(err);
