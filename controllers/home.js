@@ -82,9 +82,7 @@ router.get('/posts/all', isAuth, async (req, res) => {
 
         const postObj = {
             posts:posts,
-        }
-        if (req.session.logged_in) {
-            postObj.user = req.session.username
+            user:req.session.username
         }
         //res.json(posts);
         res.render('home', postObj);
@@ -112,25 +110,29 @@ router.get('/posts/:id', isAuth, async (req, res) => {
 });
 
 router.get('/dashboard', isAuth, async (req, res) => {
-    let userPosts;
-    const userPostData = await Post.findAll({
-        include:{model:User},
-        where:{user_id:req.session.user_id}
-    });
-    userPosts = await userPostData.map((post) => post.get({ plain: true }));
-    
-    for (let i = 0; i < posts.length; i++) {
-        userPosts[i].user.password = null;
-        userPosts[i].user.email = null;
-    }
+    try {
+        let userPosts;
+        const userPostData = await Post.findAll({
+            include:{model:User},
+            where:{user_id:req.session.user_id}
+        });
+        userPosts = await userPostData.map((post) => post.get({ plain: true }));
+        
+        for (let i = 0; i < posts.length; i++) {
+            userPosts[i].user.password = null;
+            userPosts[i].user.email = null;
+        }
 
-    const postObj = {
-        posts:userPosts,
-        user:req.session.username,
-        dashboard:true
+        const postObj = {
+            posts:userPosts,
+            user:req.session.username,
+            dashboard:true
+        }
+        res.render('home', postObj);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
     }
-    //res.json(posts);
-    res.render('home', postObj);
 });
 
 router.get('*', (req, res) => {
