@@ -5,9 +5,9 @@ const redirect = (message, location) => {
     console.log(message);
     location.textContent = 'Success! Logging you in...';
     setTimeout(() => { 
-        document.location.replace('/');
+        document.location.replace('/dashboard');
     }, 4000); 
-}
+};
 
 if (form) {
     form.addEventListener('submit', async (event) => {
