@@ -2,3 +2,13 @@
     height: 100px;
     width: 100px;
 }
+
+.edit-button {
+    height: 50px;
+    width: 50px;
+}
+
+.delete-button {
+    height: 50px;
+    width: 50px;
+}
