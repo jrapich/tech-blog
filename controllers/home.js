@@ -119,7 +119,18 @@ router.get('/dashboard', isAuth, async (req, res) => {
     });
     userPosts = await userPostData.map((post) => post.get({ plain: true }));
     
-    res.render('dashboard', {userPosts});
+    for (let i = 0; i < posts.length; i++) {
+        userPosts[i].user.password = null;
+        userPosts[i].user.email = null;
+    }
+
+    const postObj = {
+        posts:userPosts,
+        user:req.session.username,
+        dashboard:true
+    }
+    //res.json(posts);
+    res.render('home', postObj);
 });
 
 router.get('*', (req, res) => {
