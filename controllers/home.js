@@ -7,7 +7,8 @@ router.get('/', async (req, res) => {
         const posts = [];
         let allPosts = await Post.findAll({
             include:{model:User},
-            attributes :{exclude:['password']}
+            attributes :{exclude:['password']},
+            order:[['created_on', 'DESC']]
         });
         allPosts = allPosts.map((post) => post.get({ plain: true }));
         
@@ -74,7 +75,8 @@ router.get('/posts/all', isAuth, async (req, res) => {
     try {
         const allPosts = await Post.findAll({
             include:{model:User},
-            attributes :{exclude:['password']}
+            attributes :{exclude:['password']},
+            order:[['created_on', 'DESC']]
         });
         let posts = await allPosts.map( (post) => post.get({ plain: true }));
         
