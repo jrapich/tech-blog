@@ -4,17 +4,20 @@ const {isAuth} = require('../utils');
 
 router.get('/', async (req, res) => {
     try {
-        const allPosts = await Post.findAll({
+        const posts = [];
+        let allPosts = await Post.findAll({
             include:{model:User},
             attributes :{exclude:['password']}
         });
-        let posts;
+        allPosts = allPosts.map((post) => post.get({ plain: true }));
+        
+        for (let i = 0; i < allPosts.length; i++) {
+            allPosts[i].user.password = null;
+            allPosts[i].user.email = null;
+        }
 
-        (allPosts.length > 5) ? posts = allPosts.slice(-5) : posts = allPosts;
-        posts = await allPosts.map((post) => post.get({ plain: true }));
-        for (let i = 0; i < posts.length; i++) {
-            posts[i].user.password = null;
-            posts[i].user.email = null;
+        for (let j = 0; j < 5; j++) {
+            posts.push(allPosts[j]);
         }
 
         const postObj = {
