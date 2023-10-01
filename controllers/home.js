@@ -5,10 +5,8 @@ const {isAuth, getUserList} = require('../utils');
 router.get('/', async (req, res) => {
     try {
         const allPosts = await Post.findAll({
-            include:User,
-            attributes :{
-                exclude:['password']
-            }
+            include:{model:User},
+            attributes :{exclude:['password']}
         });
         const userList = await getUserList();
         let posts;
