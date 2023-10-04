@@ -32,5 +32,31 @@ router.put('/comment/:id', async (req, res) => {
     }
 });
 
+router.delete('/post/:id', async (req, res) => {
+    try {
+        
+        const postDestroy = await Post.destroy(
+            {where:{id:req.params.id}});
+
+        res.json(postDestroy);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
+});
+
+router.delete('/comment/:id', async (req, res) => {
+    try {
+        
+        const commentDestroy = await Comment.update(
+        {where:{id:req.params.id}
+        });
+
+        res.json(commentDestroy);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
+});
 
 module.exports = router;
