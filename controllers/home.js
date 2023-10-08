@@ -116,12 +116,20 @@ router.get('/posts/:id', isAuth, async (req, res) => {
 
 router.get('/posts/edit/:id', isAuth, async (req, res) => {
     try {
+        let post = await Post.findByPk(req.params.id);
+        post = await post.get({plain:true});
+
+        if (post.user_id !== req.session.user_id) {
+            res.status(401).json({message:"You do not have the permissions to modify this post"});
+        return;
+        }
+
         const postObj = {
             user:req.session.username,
             postID:req.params.id
         }
 
-        res.render('modify', postObj);  
+        (post.id !== req.params.id) ? res.status(404).json("ERROR, post not found") : res.render('modify', postObj);  
         
     } catch (err) {
         console.error(err);
