@@ -107,7 +107,14 @@ router.get('/posts/:id', isAuth, async (req, res) => {
             },
         });
         post = await post.get({plain:true});
-        (!post.id) ? res.status(404).json("ERROR, post not found") : res.render('post', post);
+
+        const postObj = {
+            post:post,
+            user:req.session.username
+        }
+        //need to rework below logic to check if the post exists
+        //(!post.id) ? res.status(404).json("ERROR, post not found") : res.render('post', postObj);
+        res.render('post', postObj);
     } catch (err) {
         console.error(err);
         res.status(500).json(err);
