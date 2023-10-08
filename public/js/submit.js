@@ -36,6 +36,6 @@ if (editPost) {
             headers: { 'Content-Type': 'application/json' },
         });
         const response = await sendPost.json();
-        document.location.replace(`posts/${postID}`);
+        document.location.replace(`/gitposts/${postID}`);
     });
 };
