@@ -122,9 +122,9 @@ router.get('/posts/:id', isAuth, async (req, res) => {
         }
 
         //for viewing in insomnia the object we are sending to handlebars 
-        res.json(postObj);
+        //res.json(postObj);
 
-        //res.render('post', postObj);
+        res.render('post', postObj);
     } catch (err) {
         console.error(err);
         res.status(500).json(err);
