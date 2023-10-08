@@ -118,6 +118,8 @@ router.get('/posts/edit/:id', isAuth, async (req, res) => {
     try {
         let post = await Post.findByPk(req.params.id);
 
+        //trying to check here if the post exists, if not, 404
+        //but its currently not working as expected
         // if (post.id !== req.params.id) {
         //     res.status(404).json("ERROR, post not found");
         //     return;
