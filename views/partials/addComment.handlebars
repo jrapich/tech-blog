@@ -1,23 +1,26 @@
 <section class="container-fluid" style="padding-top: 80px;">
     <section class="col justify-content-start comment-section">
+        {{#each comments as |comment|}}
+            {{> comment}}
+        {{/each}}
         <section class="row">
-            <div class="col-10 text-center" style="padding-bottom: 40px;">
+            <div class="col-10 text-center" style="padding-top: 40px;">
                 Add a comment to this post:
             </div>
         </section>
-        <section class="row justify-content-center postID" id="{{postID}}">
-        <div class="col-2"></div>
-        <div class="col-6">
-            <div style="padding: 20px;"></div>
-            <form class="form-floating">
-                <input type="text" class="form-control" id="floatingInputContent">
-                <label for="floatingInputContent">Enter new post content here</label>
-            </form>
-            <div style="padding: 10px;"></div>
-            <button type="button" class="btn btn-outline-success col-2" id="editPost">Edit</button>
-        </div>
-        <div class="col-4"></div>
-    </section>
-    <script src="/js/submit.js"></script> 
+        <section class="row justify-content-center commentID" id="{{commentID}}">
+            <div class="col-2"></div>
+            <div class="col-6">
+                <div style="padding: 20px;"></div>
+                <form class="form-floating">
+                    <input type="text" class="form-control" id="floatingInputContent">
+                    <label for="floatingInputContent">Enter new post content here</label>
+                </form>
+                <div style="padding: 10px;"></div>
+                <button type="button" class="btn btn-outline-success col-2" id="submitComment">Submit</button>
+            </div>
+            <div class="col-4"></div>
+        </section>
+        <script src="/js/submit.js"></script> 
     </section>
 </section>
