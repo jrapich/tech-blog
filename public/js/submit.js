@@ -3,6 +3,8 @@ const editPost = document.querySelector('#editPost');
 const comment = document.querySelector('#submitComment');
 const editComment = document.querySelector('#editComment');
 
+//const commentID = document.querySelector('.commentID').getAnimations('id');
+
 if (post) {
     post.addEventListener('click', async (event) => {
         event.preventDefault();
@@ -22,7 +24,8 @@ if (post) {
 };
 
 if (editPost) {
-    post.addEventListener('click', async (event) => {
+    const postID = document.querySelector('.postID').getAttribute('id');
+    editPost.addEventListener('click', async (event) => {
         event.preventDefault();
         const postContent = document.querySelector('#floatingInputContent').value.trim();
         const sendPost = await fetch(`/api/modify/post/${postID}`, {
