@@ -114,6 +114,21 @@ router.get('/posts/:id', isAuth, async (req, res) => {
     }
 });
 
+router.get('/posts/edit/:id', isAuth, async (req, res) => {
+    try {
+        const postObj = {
+            user:req.session.username,
+            postID:req.params.id
+        }
+
+        res.render('modify', postObj);  
+        
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
+});
+
 router.get('/dashboard', isAuth, async (req, res) => {
     try {
         let userPosts;
