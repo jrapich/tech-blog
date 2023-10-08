@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {Post, User} = require('../models');
+const {Post, User, Comment} = require('../models');
 const {isAuth} = require('../utils');
 
 router.get('/', async (req, res) => {
@@ -108,13 +108,23 @@ router.get('/posts/:id', isAuth, async (req, res) => {
         });
         post = await post.get({plain:true});
 
+        for (let i = 0; i < post.length; i++) {
+            post[i].user.password = null;
+            post[i].user.email = null;
+        }
+
+        //need to rework below logic to check if the post exists
+        //(!post.id) ? res.status(404).json("ERROR, post not found") : res.render('post', postObj);
+
         const postObj = {
             post:post,
             user:req.session.username
         }
-        //need to rework below logic to check if the post exists
-        //(!post.id) ? res.status(404).json("ERROR, post not found") : res.render('post', postObj);
-        res.render('post', postObj);
+
+        //for viewing in insomnia the object we are sending to handlebars 
+        res.json(postObj);
+
+        //res.render('post', postObj);
     } catch (err) {
         console.error(err);
         res.status(500).json(err);
