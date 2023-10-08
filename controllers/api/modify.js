@@ -33,6 +33,21 @@ router.put('/comment/:id', async (req, res) => {
 
 router.delete('/post/:id', async (req, res) => {
     try {
+        let post = await Post.findByPk(req.params.id);
+
+        //trying to check here if the post exists, if not, 404
+        //but its currently not working as expected
+        // if (post.id !== req.params.id) {
+        //     res.status(404).json("ERROR, post not found");
+        //     return;
+        //  }
+
+        post = await post.get({plain:true});
+
+        if (post.user_id !== req.session.user_id) {
+            res.status(401).json({message:"You do not have the permissions to modify this post"});
+        return;
+        }
         
         const postDestroy = await Post.destroy(
             {where:{id:req.params.id}});

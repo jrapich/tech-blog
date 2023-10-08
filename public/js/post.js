@@ -17,6 +17,11 @@ deleteButton.addEventListener('click', async (event) => {
         // }),
         headers: { 'Content-Type': 'application/json' },
     });
-    const response = await sendPost.json();
-    document.location.replace('/dashboard');
+    if (sendPost.status === 401) {
+        console.log(`ERROR: you do not have permission to delete this post`);
+        return;
+    } else {
+        const response = await sendPost.json();
+        document.location.replace('/dashboard');
+    }
 });
