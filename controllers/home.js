@@ -9,16 +9,13 @@ router.get('/', async (req, res) => {
     try {
         const posts = [];
         let allPosts = await Post.findAll({
-            include:{model:User},
-            attributes :{exclude:['password']},
+            include:{
+                model:User,
+                attributes :{exclude:['email','password']}
+            },
             order:[['created_on', 'DESC']]
         });
         allPosts = allPosts.map((post) => post.get({ plain: true }));
-        
-        for (let i = 0; i < allPosts.length; i++) {
-            allPosts[i].user.password = null;
-            allPosts[i].user.email = null;
-        }
 
         if (allPosts.length < 5) {
             for (let j = 0; j < allPosts.length; j++) {
@@ -83,16 +80,13 @@ router.get('/posts/id/all', async (req, res) => {
 router.get('/posts/all', isAuth, async (req, res) => {
     try {
         const allPosts = await Post.findAll({
-            include:{model:User},
-            attributes :{exclude:['password']},
+            include:{
+                model:User,
+                attributes :{exclude:['email','password']}
+            },
             order:[['created_on', 'DESC']]
         });
         let posts = await allPosts.map( (post) => post.get({ plain: true }));
-        
-        for (let i = 0; i < posts.length; i++) {
-            posts[i].user.password = null;
-            posts[i].user.email = null;
-        }
 
         const postObj = {
             posts:posts,
@@ -109,23 +103,23 @@ router.get('/posts/all', isAuth, async (req, res) => {
 
 router.get('/posts/:id', isAuth, async (req, res) => {
     try {
-        const UserList = (arrayUserIDs, arrayUsers) => {
-            // const userIDs = arrayUserIDs;
-            // const usernames = arrayUserIDs;
-            for (let i = 0; i < arrayUserIDs.length; i++) {
-                this.arrayUserIDs[i] = arrayUsers[i]; 
-            }
-        }
         let post = await Post.findByPk(req.params.id, {
-            include:[{all:true}],
-            attributes:{
-                exclude:'password'
-            },
+            include:{
+                model:User,
+                attributes :{exclude:['email','password']}
+            }
         });
         post = await post.get({plain:true});
 
-        post.user.password = null;
-        post.user.email = null;
+        let comments = await Comment.findAll({
+            include:{
+                model:User,
+                attributes :{exclude:['email','password']}
+            },
+            where:{post_id:req.params.id},
+            order:[['created_on', 'DESC']]
+        });
+        //comments = await comments.get({plain:true});
 
         
 
@@ -134,7 +128,8 @@ router.get('/posts/:id', isAuth, async (req, res) => {
 
         const postObj = {
             post:post,
-            loggedInUser:req.session.username
+            loggedInUser:req.session.username,
+            comments:comments,
         }
 
         debugRoutes ? res.json(postObj) : res.render('post', postObj);
@@ -179,15 +174,13 @@ router.get('/dashboard', isAuth, async (req, res) => {
     try {
         let userPosts;
         const userPostData = await Post.findAll({
-            include:{model:User},
+            include:{
+                model:User,
+                attributes :{exclude:['email','password']}
+            },
             where:{user_id:req.session.user_id}
         });
         userPosts = await userPostData.map((post) => post.get({ plain: true }));
-        
-        for (let i = 0; i < userPosts.length; i++) {
-            userPosts[i].user.password = null;
-            userPosts[i].user.email = null;
-        }
 
         const postObj = {
             posts:userPosts,
