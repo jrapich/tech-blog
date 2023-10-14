@@ -14,4 +14,11 @@
 </section>
 <script src="/js/post.js"></script>
 
-{{> addComment}}
+<section class="container-fluid" style="padding-top: 80px;">
+    <section class="col justify-content-start comment-section">
+        {{#each comments as |comment|}}
+            {{> comment}}
+        {{/each}}
+        {{> addComment}}
+    </section>
+</section> 
