@@ -187,7 +187,7 @@ router.get('/dashboard', isAuth, async (req, res) => {
             loggedInUser:req.session.username,
             dashboard:true
         }
-        res.render('home', postObj);
+        debugRoutes ? res.json(postObj) : res.render('home', postObj);
     } catch (err) {
         console.error(err);
         res.status(500).json(err);
