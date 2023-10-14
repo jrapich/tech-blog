@@ -58,7 +58,7 @@ router.get('/posts/id/all', async (req, res) => {
         const allPosts = await Post.findAll();
         let posts;
         let postIds = [];
-        (allPosts.length > 5) ? posts = allPosts.slice(-5) : posts = allPosts;
+        //(allPosts.length > 5) ? posts = allPosts.slice(-5) : posts = allPosts;
         posts = allPosts.map((post) => post.get({ plain: true }));
         for (let i = 0; i < posts.length; i++) {
             postIds.push(posts[i].id);
@@ -100,6 +100,13 @@ router.get('/posts/all', isAuth, async (req, res) => {
 
 router.get('/posts/:id', isAuth, async (req, res) => {
     try {
+        const UserList = (arrayUserIDs, arrayUsers) => {
+            // const userIDs = arrayUserIDs;
+            // const usernames = arrayUserIDs;
+            for (let i = 0; i < arrayUserIDs.length; i++) {
+                this.arrayUserIDs[i] = arrayUsers[i]; 
+            }
+        }
         let post = await Post.findByPk(req.params.id, {
             include:[{all:true}],
             attributes:{
@@ -112,6 +119,8 @@ router.get('/posts/:id', isAuth, async (req, res) => {
             post[i].user.password = null;
             post[i].user.email = null;
         }
+
+        
 
         //need to rework below logic to check if the post exists
         //(!post.id) ? res.status(404).json("ERROR, post not found") : res.render('post', postObj);
