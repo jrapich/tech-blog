@@ -117,7 +117,7 @@ router.get('/posts/:id', isAuth, async (req, res) => {
                 attributes :{exclude:['email','password']}
             },
             where:{post_id:req.params.id},
-            order:[['created_on', 'DESC']]
+            order:[['created_on', 'ASC']]
         });
         //comments = await comments.get({plain:true});
 
