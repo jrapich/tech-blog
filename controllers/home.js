@@ -17,10 +17,16 @@ router.get('/', async (req, res) => {
             allPosts[i].user.email = null;
         }
 
-        for (let j = 0; j < 5; j++) {
-            posts.push(allPosts[j]);
+        if (allPosts.length < 5) {
+            for (let j = 0; j < allPosts.length; j++) {
+                posts.push(allPosts[j]);
+            }
+        } else {
+            for (let j = 0; j < 5; j++) {
+                posts.push(allPosts[j]);
+            }
         }
-
+        
         const postObj = {
             posts:posts,
         }
