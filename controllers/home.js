@@ -119,6 +119,8 @@ router.get('/posts/:id', isAuth, async (req, res) => {
             where:{post_id:req.params.id},
             order:[['created_on', 'ASC']]
         });
+        //for some reason this .get method here doesn't work,
+        //even though we are using it in the exact same way as above
         //comments = await comments.get({plain:true});
 
         
