@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
             posts:posts,
         }
         if (req.session.logged_in) {
-            postObj.user = req.session.username
+            postObj.loggedInUser = req.session.username
         }
         
         res.render('home', postObj);
@@ -87,7 +87,7 @@ router.get('/posts/all', isAuth, async (req, res) => {
 
         const postObj = {
             posts:posts,
-            user:req.session.username
+            loggedInUser:req.session.username
         }
         //res.json(posts);
         res.render('home', postObj);
@@ -115,10 +115,8 @@ router.get('/posts/:id', isAuth, async (req, res) => {
         });
         post = await post.get({plain:true});
 
-        for (let i = 0; i < post.length; i++) {
-            post[i].user.password = null;
-            post[i].user.email = null;
-        }
+        post.user.password = null;
+        post.user.email = null;
 
         
 
@@ -127,13 +125,13 @@ router.get('/posts/:id', isAuth, async (req, res) => {
 
         const postObj = {
             post:post,
-            user:req.session.username
+            loggedInUser:req.session.username
         }
 
         //for viewing in insomnia the object we are sending to handlebars 
-        //res.json(postObj);
+        res.json(postObj);
 
-        res.render('post', postObj);
+        // res.render('post', postObj);
     } catch (err) {
         console.error(err);
         res.status(500).json(err);
@@ -159,7 +157,7 @@ router.get('/posts/edit/:id', isAuth, async (req, res) => {
         }
 
         const postObj = {
-            user:req.session.username,
+            loggedInUser:req.session.username,
             postID:req.params.id
         } 
          
@@ -187,7 +185,7 @@ router.get('/dashboard', isAuth, async (req, res) => {
 
         const postObj = {
             posts:userPosts,
-            user:req.session.username,
+            loggedInUser:req.session.username,
             dashboard:true
         }
         res.render('home', postObj);

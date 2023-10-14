@@ -12,8 +12,8 @@
         <nav class="navbar bg-body-tertiary">
             <div class="container-fluid">
                 <span class="navbar-brand mb-0 h1">Tech-Blog</span>
-                {{#if user}}
-                <span class="navbar-brand mb-0 h4 align-items-end">Logged in as {{user}}
+                {{#if loggedInUser}}
+                <span class="navbar-brand mb-0 h4 align-items-end">Logged in as {{loggedInUser}}
                     <div class=""><a class="" href="/api/auth/logout">Logout</a></div>
                 </span>
                 {{/if}}
