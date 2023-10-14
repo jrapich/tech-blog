@@ -119,9 +119,7 @@ router.get('/posts/:id', isAuth, async (req, res) => {
             where:{post_id:req.params.id},
             order:[['created_on', 'ASC']]
         });
-        //for some reason this .get method here doesn't work,
-        //even though we are using it in the exact same way as above
-        //comments = await comments.get({plain:true});
+        comments = await comments.map( (comment) => comment.get({ plain: true }));
 
         
 
@@ -133,7 +131,7 @@ router.get('/posts/:id', isAuth, async (req, res) => {
             loggedInUser:req.session.username,
             comments:comments,
         }
-
+        console.log(postObj.comments);
         debugRoutes ? res.json(postObj) : res.render('post', postObj);
     } catch (err) {
         console.error(err);
