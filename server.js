@@ -19,7 +19,17 @@ const hbs = exphbs.create();
 //configuration for session/sequelize sync
 const sess = {
     secret: process.env.SESSION_SECRET,
-    cookie: {},
+    cookie: {
+      //sets the session cookie to expire after 12 hours
+      //this means after 12 hours, user will have to log in again
+      maxAge: 12 * 60 * 60 * 1000,
+      httpOnly: true,
+      //secure:true will only issue cookie if connecting over SSL/https
+      //protects frontend user if someone is trying to steal their cookies, and in general its good idea to use encryption wherever possible
+      //should be set to false in dev environment as localhost doesnt use ssl/https
+      secure:false,
+      sameSite: 'strict',
+    },
     resave: false,
     saveUninitialized: true,
     store: new SequelizeStore({
