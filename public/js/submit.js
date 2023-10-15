@@ -39,3 +39,21 @@ if (editPost) {
         document.location.replace(`/gitposts/${postID}`);
     });
 };
+
+if (comment) {
+    const postID = document.querySelector('.editDiv').getAttribute('id');
+    comment.addEventListener('click', async (event) => {
+        event.preventDefault();
+        const commentContent = document.querySelector('#floatingInputContent').value.trim();
+        const sendComment = await fetch('/api/submit/comment', {
+            method:'POST',
+            body: JSON.stringify({
+                comment_content:commentContent,
+                post_id:postID,
+            }),
+            headers: { 'Content-Type': 'application/json' },
+        });
+        const response = await sendComment.json();
+        document.location.reload();
+    });
+}
