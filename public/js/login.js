@@ -28,10 +28,14 @@ if (form) {
             headers: { 'Content-Type': 'application/json' },
         });
         const res = await response.json();
-
+        const errorMessage = () => {
+            loginText.setAttribute('style', "color:red;");
+            loginText.textContent = res.message;
+        };
         //if successful, redirect to user dashboard, otherwise, display error message from server
-        (response.ok) ? redirect(res.message, loginText) : loginText.textContent = res.message;
-        
+        (response.ok) 
+            ? redirect(res.message, loginText) 
+            : errorMessage();
     });
 };
 
@@ -68,7 +72,7 @@ if (signup) {
             passMessage.textContent = `That username already exists.`
         };
         //if successful, redirect to dashboard, otherwise, display message from server
-        (response.ok) ? redirect(res.message, passMessage) : passMessage.textContent = res.message;
+        (response.ok) ? redirect(res.message, passMessage) : console.log(res.message);
         if (response.status === 500) {
             console.log(res);
         }
