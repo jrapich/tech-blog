@@ -1,9 +1,9 @@
 <section class="postSpace container-fluid">
     <section class="row text-center">
-        <div class="col"></div>
-        <div class="col-6 titleText h1">{{post.post_title}}</div>
-        <div class="col container align-items-center editDiv" id="{{post.id}}">
-            <div class="py-2">
+        <div class="col-2"></div>
+        <h1 class="col titleText">{{post.post_title}}</h1>
+        <div class="col-2 container align-items-center editDiv" id="{{post.id}}">
+            <div class=" edit-area py-2">
                 <button class="edit-button custom-color-2">
                     <img class="button-image" src="/images/modify-icon-2.jpg">
                     Edit Post
@@ -16,7 +16,7 @@
             </div>
         </div>
     </section>
-    <div class="row text-center h4">Created by: {{post.user.username}}</div>
+    <h4 class="row text-center">Created by: {{post.user.username}}</h4>
     <div class="row text-center align-items-end" style="padding-top: 10px;">{{post.created_on}}</div>
     <section class="row text-center" style="padding-top: 40px;">{{post.post_content}}</section>
 </section>

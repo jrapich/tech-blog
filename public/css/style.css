@@ -17,3 +17,47 @@
     height: 50px;
     width: 50px;
 }
+
+@media only screen and (max-width: 868px) {
+    .navlist {
+        font-size: 70%;
+    }
+    h1 {
+        font-size: 24px;
+    }
+    h4 {
+        font-size: 18px;
+    }
+    h3 {
+        font-size: 90%;
+    }
+    .edit-area{
+        flex-direction: column;
+        font-size: 70%;
+    }
+    .edit-button {
+        height: 70px;
+        width: 65px;
+        padding-bottom: 10px;
+    }
+    .delete-button {
+        height: 70px;
+        width: 65px;
+    }
+    .button-image {
+        height: 40px;
+        width: 40px;
+    }
+    .postSpace {
+        font-size: 85% !important;
+    }
+    .comment-section {
+        font-size: 80%;
+    }
+}
+@media only screen and (max-width: 550px) {
+    .post-thumbnail {
+        width: 50px;
+        height:50px;
+    }
+}
