@@ -3,6 +3,11 @@
     color:rgba(1, 241, 1, 0.697) !important;
 }
 
+.custom-color-2 {
+    background-color: rgba(0, 0, 0, 0.267) !important;
+    color:rgba(1, 241, 1, 0.697) !important;
+}
+
 .post-thumbnail {
     height: 100px;
     width: 100px;
