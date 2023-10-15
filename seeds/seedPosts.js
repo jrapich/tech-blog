@@ -1,5 +1,6 @@
 const {Post} = require('../models');
 
+//basic post data to seed
 const postData = [
     {
         post_title:'Example Post',

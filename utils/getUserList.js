@@ -1,5 +1,6 @@
 const {User} = require('../models');
 
+//function which grabs a list of all users currently in db and returns it
 const getUserList = async () =>{
     const userData = await User.findAll();
     const userListData = userData.map((users) => users.get({ plain: true }));

@@ -1,6 +1,10 @@
 const router = require('express').Router();
 const {Post, Comment} = require('../../models');
 
+//TODO: these routes need some error checks to make sure the post/comment actually exists first!
+//TODO: add better logic checks so that other users cannot edit/delete other users posts if they tried to submit custom http requests to the server
+
+//route for modifying a post
 router.put('/post/:id', async (req, res) => {
     try {
         const {post_content} = req.body;
@@ -16,6 +20,7 @@ router.put('/post/:id', async (req, res) => {
     }
 });
 
+//route for modifiying a comment
 router.put('/comment/:id', async (req, res) => {
     try {
         const {comment_content} = req.body;
@@ -31,6 +36,7 @@ router.put('/comment/:id', async (req, res) => {
     }
 });
 
+//route for deleting a post
 router.delete('/post/:id', async (req, res) => {
     try {
         let post = await Post.findByPk(req.params.id);
@@ -44,6 +50,7 @@ router.delete('/post/:id', async (req, res) => {
 
         post = await post.get({plain:true});
 
+        //logic check that prevents a user from deleting another user's post
         if (post.user_id !== req.session.user_id) {
             res.status(401).json({message:"You do not have the permissions to modify this post"});
         return;
@@ -59,6 +66,7 @@ router.delete('/post/:id', async (req, res) => {
     }
 });
 
+//route for deleting a comment
 router.delete('/comment/:id', async (req, res) => {
     try {
         

@@ -5,6 +5,12 @@ const editComment = document.querySelector('#editComment');
 
 //const commentID = document.querySelector('.commentID').getAnimations('id');
 
+
+//logic which checks if we are on a page that can make a new post, edit a current post, or make a new comment
+
+//TODO: needs better logic to check against various error messages from server
+
+//logic for making a new post
 if (post) {
     post.addEventListener('click', async (event) => {
         event.preventDefault();
@@ -23,6 +29,7 @@ if (post) {
     });
 };
 
+//for editing a current post
 if (editPost) {
     const postID = document.querySelector('.postID').getAttribute('id');
     editPost.addEventListener('click', async (event) => {
@@ -40,6 +47,7 @@ if (editPost) {
     });
 };
 
+//for adding a comment
 if (comment) {
     const postID = document.querySelector('.editDiv').getAttribute('id');
     comment.addEventListener('click', async (event) => {

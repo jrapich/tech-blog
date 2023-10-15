@@ -1,10 +1,18 @@
 const router = require('express').Router();
 const {Post, User, Comment} = require('../models');
+//utlity to determine if a user is logged in. if not, redirects them to login page
 const {isAuth} = require('../utils');
 
+//TODO: many of these routes need a proper error checking, better error messages, etc
+
+//use some dev variables for debugging purposes tht are specified in environment variables
+//especially useful for making sure the routes are sending back the correct stuff
+//debugRoutes:true will send back a json version of the object that is being passed to handlebars
+//debugRoutes:false will render the pages in handlebars as normal
 const devLog = process.env.DEVLOGGING === 'true' ? true : false;
 const debugRoutes = process.env.DEBUG_ROUTES === 'true' ? true : false;
 
+//basic homepage route this will grab all posts from the db,reduce that to the five most recent, and render with handlebars 
 router.get('/', async (req, res) => {
     try {
         const posts = [];
@@ -30,11 +38,13 @@ router.get('/', async (req, res) => {
         const postObj = {
             posts:posts,
         }
+        //if the user is signed in, pass that to handlebars
+        //this determines if the logout button/text displays or not
         if (req.session.logged_in) {
             postObj.loggedInUser = req.session.username
         }
         
-        res.render('home', postObj);
+        debugRoutes ? res.json(postObj) : res.render('home', postObj);
     } catch (err) {
         console.error(err);
         res.status(500).json(err);
@@ -59,6 +69,8 @@ router.get('/signup', async (req, res) => {
     }
 });
 
+//a helper route I was using early on in development to keep track of all posts and their ids
+//will return an array that contains each post's id that exists
 router.get('/posts/id/all', async (req, res) => {
     try {
         const allPosts = await Post.findAll();
@@ -77,6 +89,8 @@ router.get('/posts/id/all', async (req, res) => {
     }
 });
 
+//route for all posts. must be logged in to view
+//fetches all posts and the users who created them, from the db, renders them with handlebars
 router.get('/posts/all', isAuth, async (req, res) => {
     try {
         const allPosts = await Post.findAll({
@@ -92,15 +106,15 @@ router.get('/posts/all', isAuth, async (req, res) => {
             posts:posts,
             loggedInUser:req.session.username
         }
-        //res.json(posts);
-        res.render('home', postObj);
+        debugRoutes ? res.json(postObj) : res.render('home', postObj);
     } catch (err) {
         console.error(err);
         res.status(500).json(err);
-    }
-    
+    }  
 });
 
+//displays a specific post by id specified in url
+//will also send back any comments attached in this post to display under the post content
 router.get('/posts/:id', isAuth, async (req, res) => {
     try {
         let post = await Post.findByPk(req.params.id, {
@@ -139,6 +153,8 @@ router.get('/posts/:id', isAuth, async (req, res) => {
     }
 });
 
+//route to a page to edit a specific post by id
+//must be logged in to work, and is reached from the user dashboard
 router.get('/posts/edit/:id', isAuth, async (req, res) => {
     try {
         let post = await Post.findByPk(req.params.id);
@@ -162,7 +178,7 @@ router.get('/posts/edit/:id', isAuth, async (req, res) => {
             postID:req.params.id
         } 
          
-         res.render('modify', postObj);  
+        debugRoutes ? res.json(postObj) : res.render('modify', postObj);  
         
     } catch (err) {
         console.error(err);
@@ -170,6 +186,8 @@ router.get('/posts/edit/:id', isAuth, async (req, res) => {
     }
 });
 
+//route to view the user dashboard. must be logged in
+//can see all posts you have created here, and add a new one
 router.get('/dashboard', isAuth, async (req, res) => {
     try {
         let userPosts;
@@ -194,6 +212,7 @@ router.get('/dashboard', isAuth, async (req, res) => {
     }
 });
 
+//route to redirect anything else not covered here to home
 router.get('*', (req, res) => {
     res.redirect('/');
 });

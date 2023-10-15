@@ -1,5 +1,6 @@
 const {Comment} = require('../models');
 
+//basic comment data to seed
 const commentData = [
     {
         comment_content:'comments will appear here',

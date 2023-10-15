@@ -3,6 +3,7 @@ const seedPosts = require('./seedPosts');
 const seedComments = require('./seedComments');
 const sequelize = require('../config/connection');
 
+//SEED ALL THE THINGS
 const seedAllTheThings = async () => {
     await sequelize.sync({force:true});
     console.log('\n----- DATABASE SYNCED -----\n');

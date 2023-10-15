@@ -1,6 +1,7 @@
 const form = document.querySelector('#submit');
 const signup = document.querySelector('#signup');
 
+//redirect text if signup/login is successful
 const redirect = (message, location) => {
     console.log(message);
     location.textContent = 'Success! Logging you in...';
@@ -9,6 +10,7 @@ const redirect = (message, location) => {
     }, 4000); 
 };
 
+//logic behind submitting login info to server
 if (form) {
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
@@ -16,6 +18,7 @@ if (form) {
         const passwordInput = document.querySelector('#passwordInput').value.trim();
         const loginText = document.querySelector('#userHelp');
 
+        //submit the input data to server
         const response = await fetch('/api/auth/login', {
             method: 'POST',
             body: JSON.stringify({ 
@@ -26,11 +29,13 @@ if (form) {
         });
         const res = await response.json();
 
+        //if successful, redirect to user dashboard, otherwise, display error message from server
         (response.ok) ? redirect(res.message, loginText) : loginText.textContent = res.message;
         
     });
 };
 
+//handler for user signup
 if (signup) {
     signup.addEventListener('submit', async (event) => {
         event.preventDefault();
@@ -50,6 +55,7 @@ if (signup) {
         });
         const res = await response.json();
 
+        //various messages displaying errors based on different responses from server
         if (response.status === 418) {
             passMessage.setAttribute('style', "color:red;");
             passMessage.textContent = `\n
@@ -61,7 +67,7 @@ if (signup) {
             passMessage.setAttribute('style', "color:red;");
             passMessage.textContent = `That username already exists.`
         };
-
+        //if successful, redirect to dashboard, otherwise, display message from server
         (response.ok) ? redirect(res.message, passMessage) : passMessage.textContent = res.message;
         if (response.status === 500) {
             console.log(res);
