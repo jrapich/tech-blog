@@ -15,7 +15,6 @@ Post.init(
         },
         post_title:{
             type:DataTypes.TEXT,
-            unique:true,
             allowNull:false,
             validate:{
                 notEmpty:true,
