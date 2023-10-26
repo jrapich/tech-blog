@@ -27,7 +27,7 @@ const sess = {
       //secure:true will only issue cookie if connecting over SSL/https
       //protects frontend user if someone is trying to steal their cookies, and in general its good idea to use encryption wherever possible
       //should be set to false in dev environment as localhost doesnt use ssl/https
-      secure:true,
+      secure:false,
       sameSite: 'strict',
     },
     resave: false,
