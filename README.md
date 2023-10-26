@@ -1,7 +1,7 @@
 
 # CMS-tech-blog
 
-<img>
+<img src='./lib/badges/license.svg'>    <img src='./lib/badges/express-handlebars-7.1.2.svg'>    <img src='./lib/badges/bcrypt-5.1.1.svg'>    <img src='./lib/badges/sequelize-6.33.0.svg'>    <img src='./lib/badges/dotenv-16.3.1.svg'>
 
 ## Description
 
