@@ -14,7 +14,7 @@ Post.init(
             autoIncrement:true
         },
         post_title:{
-            type:DataTypes.STRING,
+            type:DataTypes.TEXT,
             unique:true,
             allowNull:false,
             validate:{
@@ -23,7 +23,7 @@ Post.init(
             }
         },
         post_content:{
-            type:DataTypes.STRING(9000),
+            type:DataTypes.TEXT,
             allowNull:false,
             validate:{
                 notEmpty:true,
