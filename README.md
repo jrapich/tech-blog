@@ -29,7 +29,13 @@ Otherwise, if using a deployment service like Heroku or Railway, then special va
 
 ## Usage
 
-Firstly, at the default site landing page, you will see the 5 most recent posts on the blog. To view any of these posts or do anything further on the site, you will need to log in to an account, or sign up with one if you haven't already, links to both functionalities are found in the navigation panel on the left side.      
+Link to the deployed application:
+
+[https://tech-blog-production-fedd.up.railway.app/](https://tech-blog-production-fedd.up.railway.app/)
+
+Firstly, at the default site landing page, you will see the 5 most recent posts on the blog. To view any of these posts or do anything further on the site, you will need to log in to an account, or sign up with one if you haven't already, links to both functionalities are found in the navigation panel on the left side. Screenshot of the application:
+
+![Alt text](./lib/screenshots/screenshot.png)
 
 Once signed in, you can click on any  post to view it and any comments attached to it. You will be able to leave a comment of your own if you would like. 
 
