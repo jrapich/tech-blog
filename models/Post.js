@@ -23,7 +23,7 @@ Post.init(
             }
         },
         post_content:{
-            type:DataTypes.STRING,
+            type:DataTypes.STRING(9000),
             allowNull:false,
             validate:{
                 notEmpty:true,
